@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta name="author" content="Jan Franz Palngipang">
+      <title>PostCast</title>
+      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+      <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
+      <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/mediaplayer/0.7.0/media_player.js"></script>
+      <script src="/socket.io/socket.io.js"></script>
+      <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+		  <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css">
+      <script>
+        $(function(){
+          $('#video-display').draggable();
+        });
+      </script>
+  </head>
+  <body style="background-color:#d4d4d4;">
+
+      <p id="test">test</p>
+    	<div class="container">
+			<div class="row">
+				<div class="col-md-7">
+					<div id="video-display" class="panel panel-danger" style="height:450px; background-color:#ee3b3b;">
+						<div class="panel-heading">
+							<h3 class="panel-title">Video</h3>
+						</div>
+
+						<div id="player" class="panel-body">
+              <h1 id="customText" style="text-align:center;">VIDEO DISPLAY</h1>
+            </div>
+					</div>
+        </div>
+				<div class="col-md-5">
+					<div id="image-display" class="panel panel-warning" style="height:450px; background-color:#ffc125;">
+						<div class="panel-heading">
+							<h3 class="panel-title">Images</h3>
+						</div>
+						<div class="panel-body">
+              <h1 id="image" style="text-align:center;">IMAGE DISPLAY</h1>
+            </div>
+          </div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div id="text-display" class="panel panel-info" style="height:290px; background-color:#6495ed;">
+						<div class="panel-heading">
+							<h3 class="panel-title">Custom Text</h3>
+						</div>
+						<div class="panel-body">
+              <h1 id="customText" style="text-align:center;">TEXT DISPLAY</h1>
+            </div>
+					</div>
+				</div>
+			</div>
+		</div>
+    <script type='text/javascript'>
+	     //window.castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
+       //window.castrReceiverManager.start;
+      <!-- YouTube iframe API asynchrounous call -->
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      <!-- Code to create iframe after API download -->
+      var loadThis;
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+        height: '390',
+        width: '640',
+        videoId: 'M7lc1UVf-VE',
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+          }
+        });
+      }
+      function onPlayerReady(event) {
+        event.target.playVideo();
+      }
+      var done = false;
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+          setTimeout(stopVideo, 6000);
+          done = true;
+        }
+      }
+      function stopVideo() {
+        player.stopVideo();
+      }
+      //function loadVideo(videoId) {
+        //loadVideoById(videoId, 0, "large")
+        //playVideo();
+      //}
+
+      //socket object
+      var socket = io.connect('http://localhost:3000/');
+      //socket event
+      socket.on('loadVideo', function(e){
+        $('#test').text(e.videoID);
+        player.loadVideoById(e.videoID, 0, "large");
+
+      });
+      socket.on('customText', function(e){
+        $('#customText').text(e.customText);
+      });
+
+
+    </script>
+    <div id="draggable1" style="width:150px; height:150px; background:green;">
+      <p>hi!</p>
+    </div>
+
+  </body>

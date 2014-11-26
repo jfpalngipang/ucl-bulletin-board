@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Draggable Components</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
+    <script type="text/javascript" src="sweet-alert.js"></script>
+    <link rel="stylesheet" type="text/css" href="sweet-alert.css">
+    <script type="text/javascript">
+
+      $(function(){
+        $(".draggable1").draggable();
+        $("#draggable2").draggable();
+        $("#draggable3").draggable();
+        $("#draggable4").draggable();
+      });
+
+
+
+    </script>
+
+  </head>
+  <body>
+    <div id="side-pane" style="float:left;">
+      <h1>HELLO</h1>
+    </div>
+    <div id="grid1">
+      <div class="draggable1" style="height:300px; width:300px; background:red;">
+        <h1>Draggable 1</h1>
+        <button type="button" id="video-button">CONFIGURE</button>
+      </div>
+      <div id="draggable2" style="height:150px; width:150px; background:blue;">
+        <h1>Draggable 2</h1>
+      </div>
+      <div id="draggable3" style="height:450px; width:300px; background:yellow;">
+        <h1>Draggable 3</h1>
+      </div>
+      <div id="draggable4" style="height:150px; width:150px; background:orange;">
+        <h1>Draggable 4</h1>
+      </div>
+    </div>
+    <script>
+      document.querySelector('.draggable1 button').onclick = function(){
+        swal({
+          title: "Error!",
+          text: "Here's my error message!",
+          type: "error",
+          confirmButtonText: "Cool"
+        });
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "name": "postcast-server",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "*",
+    "jade": "*",
+    "socket.io": "^1.1.0"
+  }
+}
